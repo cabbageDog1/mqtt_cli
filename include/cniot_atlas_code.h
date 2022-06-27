@@ -1,0 +1,132 @@
+#ifndef CNIOT_ATLAS_CNIOT_ATLAS_CODE_H
+#define CNIOT_ATLAS_CNIOT_ATLAS_CODE_H
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+#define C_ATLAS_SDK_VERSION        (1.6.5)
+#define C_ATLAS_SDK_VERSION_STR    "165"
+#define C_MAX_ENV_LEN              (16)
+#define C_MAX_PROTOCOL_LEN         (16)
+#define C_MAX_IP_LEN               (32)
+#define C_MAX_DOMAIN_LEN           (32)
+#define C_MAX_VERSION_LEN          (32)
+#define C_MAX_SESSION_LEN          (40)
+#define C_MAX_TOKEN_LEN            (40)
+#define C_MAX_HOST_LEN             (64)
+#define C_MAX_ID_LEN               (64)
+#define C_MAX_ENTITY_NAME_LEN      (72)
+#define C_MAX_ENTITY_SECRET_LEN    (72)
+#define C_MAX_THING_SECRET_LEN     (72)
+#define C_MAX_THING_KEY            (72)
+#define C_MAX_SIGN_LEN             (128)
+#define C_MAX_SIGN_JSON_LEN        (256)
+#define C_MAX_TRACE_MSG_LEN        (256)
+#define C_MAX_URL_LEN              (128)
+#define C_MAX_ERROR_MSG_LEN        (512)
+#define C_MAX_TOPIC_LEN            (1024)
+#define C_MAX_SIGNAL_LEN           (1024)
+#define C_MAX_INVOCATION_LEN       (4096)
+#define C_MAX_BODY_LEN             (8192)
+#define C_RSP_1K_LEN               (1024)
+
+#define C_RSP_DATA_LEN             (4 * 1024)
+#define C_MAX_RSP_LEN              (20 * 1024)
+#define C_MAX_BINARY_DATA_LEN      (512 * 1024)
+#define C_HTTP_TIME_OUT            (6500)
+#define C_MQTT_REQUEST_TIMEOUT     (6500)
+#define C_COAP_REQUEST_TIMEOUT     (6500)
+
+#define PROTOCOL_CLINK_VERSION     (1)
+
+typedef enum {
+    CNIOT_STATUS_CODE_OK     = 0x00,  // 成功状态
+    CNIOT_STATUS_CODE_FAILED = 0x01,  // 模糊失败,要用具体出错代码
+    CNIOT_STATUS_PARM_ERROR  = 0x02,  // 参数错误
+    CNIOT_STATUS_NO_MEMORY   = 0x03,  // 内存不足
+    CNIOT_STATUS_NOT_SUPPORT = 0x04,  // 不支持（协议/服务/方法）
+    CNIOT_STATUS_TIMEOUT     = 0x05,  // 超时
+    CNIOT_STATUS_CODE_CONTINUE = 0x06,   //继续
+    CNIOT_STATUS_CONNECTING = 0x07,     //网络连接中
+    CNIOT_STATUS_COAP_TIMEOUT = 0x08,   // coap连接超时
+    CNIOT_STATUS_NETWORK_DISCONNECTED = 0x09, //网络重连
+
+
+    CNIOT_STATUS_PARAMETER_NULL    = 0x20, //参数为空
+    CNIOT_STATUS_PARMETER_OVERFOLW = 0x21,  //参数越界
+    CNIOT_STATUS_BARCODE_ERROR     = 0x22,  // barcode错误
+
+    CNIOT_STATUS_NOT_INITIALIZE    = 0x50, // 没有初始化
+    CNIOT_STATUS_NOT_SHUTDOWN      = 0x51, // 模块没有shutdown
+
+    CNIOT_STATUS_JSON_NOT_FORMAT     = 0x70, // 不是json格式
+    CNIOT_STATUS_JSON_NOT_FOUND_KEY  = 0x71, // 没有找到key
+    CNIOT_STATUS_RSP_NOT_SUCCESS    = 0x72, //  调用失败
+    CNIOT_STATUS_SESSION_EXPIRE     = 0x73,
+    CNIOT_STATUS_NOT_PRINTF_CHAR    = 0x74,
+
+    CNIOT_STATUS_HTTP_RSP_CODE_FAILED = 0x80,
+    CNIOT_STATUS_URI_OVERFLOW         = 0x81,
+    CNIOT_STATUS_SEND_FAILED          = 0x82,
+    CNIOT_STATUS_MSG_NOT_FOUND        = 0x83,
+    CNIOT_STATUS_MSG_DECODE_FAILED    = 0x84,
+    CNIOT_STATUS_RSP_CODE_ERROR       = 0x85,
+    CNIOT_STATUS_MSG_TIMEOUT          = 0x86,
+    CNIOT_STATUS_BUFFER_OVERFLOW      = 0x87,
+    CNIOT_STATUS_NOT_SUPPORT_301      = 0x88,
+    CNIOT_STATUS_BUFFER_EMPTY         = 0x89,
+    CNIOT_STATUS_REDIRECT_OVERFLOW    = 0x90,
+
+
+    CNIOT_STATUS_MQTT_INIT_FAILED      = 0x91,
+    CNIOT_STATUS_MQTT_CONNECT_FAILED   = 0x92,
+    CNIOT_STATUS_MQTT_SUBSCRIBE_FAILED = 0x93,
+    CNIOT_STATUS_MQTT_NOT_INIT         = 0x94,
+    CNIOT_STATUS_MQTT_DISCONNECT       = 0x95,
+    CNIOT_STATUS_MQTT_PUBLISH_FAILED   = 0x96,
+
+    CNIOT_STATUS_ALREADY_EXIST  = 0x101,  //已经存在
+    CNIOT_STATUS_NOT_EXIST      = 0x102,  //不存在
+
+
+    CNIOT_STATUS_TCP_INIT_FAILED      = 0x110,
+    CNIOT_STATUS_TCP_CONNECT_FAILED   = 0x111,
+    CNIOT_STATUS_TCP_READ_FAILED      = 0x112,
+    CNIOT_STATUS_TCP_WRITE_FAILED     = 0x113,
+    CNIOT_STATUS_TCP_WRITE_TIMEOUT    = 0x114,
+    CNIOT_STATUS_TCP_READ_TIMEOUT     = 0x115,
+
+    CNIOT_STATUS_CREATE_THREAD_FAILED = 0x201, //创建线程失败
+
+}CNIOT_STATUS_CODE;
+
+typedef  enum {
+    C_CNIOT_PROTOCOL_UNKNOW  = 0,
+    C_CNIOT_PROTOCOL_COAP = 1,
+    C_CNIOT_PROTOCOL_MQTT = 2
+}CNIOT_PROTOCOL;
+
+typedef enum {
+    CNIOT_EVENT_CONNECTING = 1,
+    CNIOT_EVENT_CONNECTED = 2,
+    CNIOT_EVENT_DISCONNECT = 3,
+    CNIOT_EVENT_RELEASE = 4,
+    CNIOT_EVENT_EDGE_ERROR = 5,
+    CNIOT_DNS_RESOLVER_SUCCESS = 6,
+    CNIOT_DNS_RESOLVER_FAILED = 7,
+    CNIOT_TCP_SEND_TIMEOUT = 8,
+    CNIOT_TCP_CONNECT_TIMEOUT = 9,
+    CNIOT_TCP_OPEN_SOCKET_FAILED = 10,
+    CNIOT_TCP_SET_SOCKET_OPT_FAILED  = 11,
+    CNIOT_TCP_CONNECT_SOCKET_SUCCESS = 12,
+    CNIOT_TCP_CONNECT_SOCKET_FAILED = 13,
+    CNIOT_TSL_HANDSHAKE_SUCCESS = 14,
+    CNIOT_TSL_HANDSHAKE_FAILED
+}CNIOT_EVENT_T;
+
+#if defined(__cplusplus)
+}
+#endif
+
+#endif //CNIOT_ATLAS_CNIOT_ATLAS_CODE_H

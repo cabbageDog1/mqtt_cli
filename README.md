@@ -1,3 +1,2 @@
-# MQTT CLIENT FROM ATLAS
-atlas embedded sdk
-codes for learning
+MQTT Client C language version
+
